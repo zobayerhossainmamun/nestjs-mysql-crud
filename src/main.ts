@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { VersioningType } from '@nestjs/common/enums';
 import { getConfig } from './utils';
 
@@ -22,6 +22,12 @@ async function bootstrap() {
 
   // Set global prefix for url
   app.setGlobalPrefix(PREFIX);
+
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform:true
+    }),
+  );
 
   await app.listen(PORT, () => {
     logger.log(`Server listenning with PORT: ${PORT}`);

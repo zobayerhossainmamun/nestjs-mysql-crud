@@ -1,5 +1,5 @@
 import { Transform, TransformFnParams } from 'class-transformer';
-import { Entity, Column, Index, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity('posts')
 export class PostEntity {
@@ -25,7 +25,6 @@ export class PostEntity {
     description!: string;
 
     @Column({ 
-        type: 'boolean', 
         default: false 
     })
     status: boolean;
