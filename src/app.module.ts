@@ -29,7 +29,8 @@ const ENV_TYPE = getEnv();
         timezone: '+06:00',
         cache: {
           duration: 60000,
-        }
+        },
+        synchronize:true
       }),
     }),
     ApiModule
