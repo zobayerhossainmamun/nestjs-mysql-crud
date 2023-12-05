@@ -1,0 +1,66 @@
+version: "3.8"
+
+services:
+  nestjs_mysql_crud:
+    container_name: nestjs-mysql-crud
+    hostname: nestjs-mysql-crud
+    image: nestjs-mysql-crud
+    env_file:
+      - ./.env.development
+    environment:
+      MYSQL_HOST: host.docker.internal
+    depends_on:
+      - nest-mysql-db
+    build:
+      context: .
+      dockerfile: ./Dockerfiles/node/Dockerfile
+    ports:
+      - "${PORT}:${PORT}"
+    
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "20"
+
+    networks:
+      - nestcrud_network
+      - nestcrud_db_network
+
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+    restart: always
+
+  nest-mysql-db:
+    build: 
+      context: .
+      dockerfile: ./Dockerfiles/mysql/Dockerfile
+    container_name: nest-mysql
+    env_file:
+      - ./.env.development
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USERNAME}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - "${MYSQL_PORT}:${MYSQL_PORT}"
+
+    volumes:
+      - mysql-db:/var/lib/mysql
+    networks:
+      - nestcrud_db_network
+
+volumes:
+  mysql-db:
+
+networks:
+  nestcrud_db_network:
+  nestcrud_network:
+    driver: bridge
+
+
+  

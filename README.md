@@ -45,6 +45,19 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## Running on Docker
+
+```bash
+# Create network
+$ docker network create nestcrud_network
+
+# Development
+$ docker-compose -f docker-compose.yml --env-file .env.development up --build -d
+
+# Production
+$ docker-compose -f docker-compose.yml --env-file .env.production up --build -d
+```
+
 ## Test
 
 ```bash

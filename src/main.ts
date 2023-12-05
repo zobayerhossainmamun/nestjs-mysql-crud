@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { VersioningType } from '@nestjs/common/enums';
-import { getConfig } from './utils';
+import { getConfig, getEnv } from './utils';
 
 export const config = getConfig();
 const PORT = config.PORT;
@@ -28,7 +28,7 @@ async function bootstrap() {
       transform:true
     }),
   );
-
+  
   await app.listen(PORT, () => {
     logger.log(`Server listenning with PORT: ${PORT}`);
   });
