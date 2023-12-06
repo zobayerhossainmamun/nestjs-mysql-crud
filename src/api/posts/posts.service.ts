@@ -18,8 +18,12 @@ export class PostsService {
      * @returns {string}
      */
     async createPost(req: CreateDto): Promise<string> {
-        const data = this.postRepository.create({ ...req, status: true });
+        const data = new PostEntity();
+        data.title = req.title;
+        data.description = req.description;
+        data.status = true;
         await this.postRepository.save(data);
+
         return 'Post created successfully.';
     }
 
